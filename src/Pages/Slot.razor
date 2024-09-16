@@ -1,0 +1,97 @@
+﻿
+@page "/"
+@inject HttpClient Http
+@inject IJSRuntime JS
+
+<h3>Single Reel Slot Machine</h3>
+
+<div class="slot-container">
+    @if (symbols != null && symbols.Length > 0)
+    {
+        <div class="reel">
+            <div class="reel-inner" id="reel">
+                <!-- Duplicate symbols for animation effect -->
+                @foreach (var symbol in symbols)
+                {
+                    <span>@symbol</span>
+                }
+                @foreach (var symbol in symbols)
+                {
+                    <span>@symbol</span>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+<button @onclick="StartSpin" disabled="@(isSpinning)">Start</button>
+<button @onclick="StopSpin" disabled="@(isStopped)">Stop</button>
+
+@code {
+    private string[] symbols = [
+    "🍒 李宗穎",
+    "🍋 陳昱璇",
+    "🍉 楊凱傑",
+    "🍇 郭家茵",
+    "⭐ 陳彥廷",
+    "🔔 陳信宏",
+    "💎 林妤綺",
+    "🍀 林㛄婷",
+    "🥝 黎書宏",
+    "🌸 吳宗璋",
+    "🌞 林士欽",
+    "🦋 史卯郁",
+    "🐢 王嘉謙",
+    "🌈 顏暖真",
+    "🎯 曾敬德",
+    "🌻 張智絢",
+    "🍎 盧鳳珠",
+    "🍏 林鈺程",
+    "🍍 郭羽庭",
+    "🥥 吳昀晏",
+    "🍑 陳葳",
+    "🍓 劉宗泰",
+    "🥭 曾曼菱",
+    "🍆 鍾宛樺",
+    "🥒 黃致崴",
+    "🍅 陳紀良",
+    "🌽 盧柔樺",
+    "🥦 施文華",
+    "🥕 許季盈",
+    "🍠 黃彥博",
+    "🥔 葉倩妏",
+    "🧅 謝孟庭",
+    "🥬 翁瑞琳",
+    "🧄 黃可欣",
+    "🌶️ 林曉君",
+    "🌰 劉芝芸",
+    "🥜 黃足寧",
+    "🌵 邱展業",
+    "🌴 周書緯"
+    ];
+    private bool isSpinning = false;
+    private bool isStopped = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Load slot symbols from JSON
+        symbols = await Http.GetFromJsonAsync<string[]>("data/slots.json");
+    }
+
+    private async Task StartSpin()
+    {
+        isSpinning = true;
+        isStopped = false;
+        // Start spinning the reel using JavaScript
+        await JS.InvokeVoidAsync("startReelAnimation");
+    }
+
+    private async Task StopSpin()
+    {
+        isSpinning = false;
+        isStopped = true;
+        // Stop the spinning reel using JavaScript
+        await JS.InvokeVoidAsync("stopReelAnimation", symbols.Length);
+    }
+}
+
