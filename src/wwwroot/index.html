@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slot Machine</title>
+    <link href="css/app.css" rel="stylesheet" />
+    
+</head>
+<body>
+    <div id="app">Loading...</div>
+    <audio id="spinSound" src="data/glass_ping.mp3"></audio>
+    <script>
+        let isSpinning = false;
+        let isStopping = false;
+        let speed = 20; // Initial spin speed
+        let reelOffset = 0; // Track the current offset
+        let lastSoundTime = 0;
+
+        function startReelAnimation() {
+            const reel = document.getElementById('reel');
+            const spinSound = document.getElementById('spinSound');
+            const symbolHeight = 50; // Height of each symbol in pixels
+            const totalSymbols = reel.children.length; // Total number of symbols (including duplicates)
+            const reelHeight = symbolHeight * totalSymbols; // Total height of the reel content
+
+            isSpinning = true;
+            isStopping = false;
+            speed = 20; // Reset speed for spinning
+            reelOffset = 0; // Reset offset
+
+            // Reset the reel to the top position before starting
+            reel.style.transition = 'none';
+            reel.style.transform = 'translateY(0)';
+
+            // Start the animation with requestAnimationFrame for smoother control
+            function spin() {
+                // Play sound at intervals
+                playSound(spinSound,speed);
+                if (isStopping) {
+                    // Slow down the speed gradually
+                    speed = Math.max(1, speed * 0.99); // Ensure speed reduces to at least 1
+
+                    // Move the reel by speed units
+                    reelOffset += speed;
+                    // Check if reelOffset has gone beyond the reel's height
+                    if (reelOffset >= reelHeight / 2) {
+                        // Reset offset to create a seamless loop effect
+                        reelOffset = reelOffset % (reelHeight / 2);
+                        reel.style.transition = 'none'; // Remove transition effect for the reset
+                    }
+                    reel.style.transform = `translateY(-${reelOffset}px)`;
+
+                    if (speed > 1) {
+                        // Continue spinning until speed reaches 1
+                        requestAnimationFrame(spin);
+                    } else {
+                        // Scroll to the nearest multiple of 50px at a fixed speed of 1
+                        const nearest50 = Math.ceil(reelOffset / symbolHeight) * symbolHeight;
+                        scrollToFinalPosition(nearest50);
+                    }
+                } else {
+                    // Normal spinning
+                    reelOffset += speed; // Keep spinning at the initial speed
+                    // Check if reelOffset has gone beyond the reel's height
+                    if (reelOffset >= reelHeight / 2) {
+                        // Reset offset to create a seamless loop effect
+                        reelOffset = reelOffset % (reelHeight / 2);
+                        reel.style.transition = 'none'; // Remove transition effect for the reset
+                    }
+                    reel.style.transform = `translateY(-${reelOffset}px)`;
+                    requestAnimationFrame(spin);
+                }
+            }
+
+            spin();
+        }
+        function playSound(sound, speed) {
+            // 根据速度动态调整音效播放间隔
+            const minInterval = 50; // 音效播放的最小间隔
+            const maxInterval = 300; // 音效播放的最大间隔
+            const interval = Math.min(maxInterval, minInterval + (1 / speed) * 200); // 调整间隔，速度越慢，间隔越长
+
+            // 控制音效播放频率
+            const now = Date.now();
+            if (now - lastSoundTime > interval) {
+                sound.currentTime = 0; // 重新从头播放
+                sound.play();
+                lastSoundTime = now;
+            }
+        }
+
+        function scrollToFinalPosition(finalOffset) {
+            const reel = document.getElementById('reel');
+
+            function scroll() {
+                // Calculate the distance to the final position
+                const distance = finalOffset - reelOffset;
+                
+                // Play sound at intervals
+                playSound(spinSound, speed);
+                // Move towards the final offset by a fixed unit of 1
+                if (Math.abs(distance) > 1) {
+                    // Move by 1 unit towards the final position
+                    reelOffset += distance > 0 ? 1 : -1; // Move 1 unit in the direction of the final position
+                    reel.style.transform = `translateY(-${reelOffset}px)`;
+                    requestAnimationFrame(scroll);
+                } else {
+                    // Snap to the final position
+                    reel.style.transform = `translateY(-${finalOffset}px)`;
+                    isSpinning = false;
+                    isStopping = false;
+                }
+            }
+
+            scroll();
+        }
+
+        function stopReelAnimation() {
+            if (!isSpinning || isStopping) return; // Prevent stopping if not spinning or already stopping
+            isStopping = true;
+        }
+    </script>
+    <script src="_framework/blazor.webassembly.js"></script>
+</body>
+</html>
