@@ -6,7 +6,7 @@
 <h3>Single Reel Slot Machine</h3>
 
 <div class="slot-container">
-    @if (symbols != null && symbols.Length > 0)
+    @if (symbols != null && symbols.Count > 0)
     {
         <div class="reel">
             <div class="reel-inner" id="reel">
@@ -28,54 +28,32 @@
 <button @onclick="StopSpin" disabled="@(isStopped)">Stop</button>
 
 @code {
-    private string[] symbols = [
-    "🍒 李宗穎",
-    "🍋 陳昱璇",
-    "🍉 楊凱傑",
-    "🍇 郭家茵",
-    "⭐ 陳彥廷",
-    "🔔 陳信宏",
-    "💎 林妤綺",
-    "🍀 林㛄婷",
-    "🥝 黎書宏",
-    "🌸 吳宗璋",
-    "🌞 林士欽",
-    "🦋 史卯郁",
-    "🐢 王嘉謙",
-    "🌈 顏暖真",
-    "🎯 曾敬德",
-    "🌻 張智絢",
-    "🍎 盧鳳珠",
-    "🍏 林鈺程",
-    "🍍 郭羽庭",
-    "🥥 吳昀晏",
-    "🍑 陳葳",
-    "🍓 劉宗泰",
-    "🥭 曾曼菱",
-    "🍆 鍾宛樺",
-    "🥒 黃致崴",
-    "🍅 陳紀良",
-    "🌽 盧柔樺",
-    "🥦 施文華",
-    "🥕 許季盈",
-    "🍠 黃彥博",
-    "🥔 葉倩妏",
-    "🧅 謝孟庭",
-    "🥬 翁瑞琳",
-    "🧄 黃可欣",
-    "🌶️ 林曉君",
-    "🌰 劉芝芸",
-    "🥜 黃足寧",
-    "🌵 邱展業",
-    "🌴 周書緯"
-    ];
+    // List to hold the symbols
+    private List<string>? symbols { get; set; }
     private bool isSpinning = false;
     private bool isStopped = true;
 
     protected override async Task OnInitializedAsync()
     {
-        // Load slot symbols from JSON
-        symbols = await Http.GetFromJsonAsync<string[]>("data/slots.json");
+        // Load symbols from the JSON file
+        symbols = await LoadSymbolsFromJsonAsync();
+    }
+
+    // Method to load symbols from the JSON file
+    private async Task<List<string>> LoadSymbolsFromJsonAsync()
+    {
+        try
+        {
+            // Read JSON file from wwwroot
+            var response = await Http.GetFromJsonAsync<List<string>>(@"data\slots.json");
+            return response ?? new List<string>();
+        }
+        catch (Exception ex)
+        {
+            // Handle any errors
+            Console.WriteLine($"Error loading symbols: {ex.Message}");
+            return new List<string>();
+        }
     }
 
     private async Task StartSpin()
@@ -91,7 +69,7 @@
         isSpinning = false;
         isStopped = true;
         // Stop the spinning reel using JavaScript
-        await JS.InvokeVoidAsync("stopReelAnimation", symbols.Length);
+        await JS.InvokeVoidAsync("stopReelAnimation", symbols!.Count);
     }
 }
 
