@@ -4,7 +4,20 @@
 @inject IJSRuntime JS
 
 <h3>Single Reel Slot Machine</h3>
-
+<!-- Slot 符號橫向清單 -->
+<div class="symbol-container">
+    @if (symbols != null)
+    {
+        @foreach (var symbol in symbols)
+        {
+            <div class="symbol-item">@symbol</div>
+        }
+    }
+    else
+    {
+        <p>Loading symbols...</p>
+    }
+</div>
 <div class="slot-container">
     @if (symbols != null && symbols.Count > 0)
     {
@@ -15,24 +28,36 @@
                 {
                     <span>@symbol</span>
                 }
-                @foreach (var symbol in symbols)
-                {
-                    <span>@symbol</span>
-                }
             </div>
         </div>
     }
+    <div style="margin:10px">
+        <button class="btn" @onclick="Spin" disabled="@isSpinning">
+            <span>@spinText</span>
+        </button>
+    </div>
 </div>
 
-<button @onclick="StartSpin" disabled="@(isSpinning)">Start</button>
-<button @onclick="StopSpin" disabled="@(isStopped)">Stop</button>
+
 
 @code {
     // List to hold the symbols
     private List<string>? symbols { get; set; }
     private bool isSpinning = false;
     private bool isStopped = true;
+    private string spinText = "Start";
+    // JS引用，用於監聽 SlotFinal 事件
+    private DotNetObjectReference<Slot> objRef;
 
+    // 初始化方法
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            objRef = DotNetObjectReference.Create(this);
+            await JS.InvokeVoidAsync("registerSlotFinalEvent", objRef); // 註冊 JS 事件監聽
+        }
+    }
     protected override async Task OnInitializedAsync()
     {
         // Load symbols from the JSON file
@@ -56,20 +81,48 @@
         }
     }
 
-    private async Task StartSpin()
+
+    private async Task Spin()
     {
-        isSpinning = true;
-        isStopped = false;
-        // Start spinning the reel using JavaScript
-        await JS.InvokeVoidAsync("startReelAnimation");
+        if (isStopped)
+        {
+            isSpinning = true;
+            isStopped = false;
+            spinText = "Stop"; // 更改按鈕文本為 "Stop"
+                               // Start spinning the reel using JavaScript
+            await JS.InvokeVoidAsync("startReelAnimation");
+            Func<Task> workItem = async () =>
+                        {
+                            await Task.Delay(300); // 可以根據需求設置延遲時間
+                            isSpinning = false; // 啟動後解禁按鈕
+                            StateHasChanged(); // 強制刷新 UI 狀態
+                        };
+            await InvokeAsync(workItem);
+        }
+        else
+        {
+            isSpinning = true;
+            isStopped = true;
+            spinText = "Start"; // 更改按鈕文本為 "Stop"
+                                // Stop the spinning reel using JavaScript
+            await JS.InvokeVoidAsync("stopReelAnimation", symbols!.Count);
+        }
     }
 
-    private async Task StopSpin()
+    // Blazor 中的回調方法，用於監聽 JS 事件 SlotFinal
+    [JSInvokable]
+    public void OnSlotFinal()
     {
+        // 當 SlotFinal 事件觸發時，啟用按鈕
         isSpinning = false;
-        isStopped = true;
-        // Stop the spinning reel using JavaScript
-        await JS.InvokeVoidAsync("stopReelAnimation", symbols!.Count);
+        StateHasChanged(); // 更新 UI 狀態
+        Console.WriteLine("Slot Machine Final Event Triggered.");
+    }
+
+    // 釋放資源
+    public void Dispose()
+    {
+        objRef?.Dispose();
     }
 }
 
