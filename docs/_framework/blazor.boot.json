@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "SlotMachine",
   "resources": {
-    "hash": "sha256-LgCKvVvP+p2cM+JYaW5Z5DwpWccjshmVoMvpZind0ME=",
+    "hash": "sha256-4CZBqNuyrgRbdevg72mofro4KYsYxAGpY4Y2q/MMZKo=",
     "jsModuleNative": {
       "dotnet.native.8.0.8.wmuq7h1tt8.js": "sha256-juC5sA7gHTLXFEhAKgdM2/RavswpwCtDfjYGsAz2FXg="
     },
@@ -31,7 +31,7 @@
       "Microsoft.Extensions.Primitives.wasm": "sha256-6187ynEahDlSLMBvD4vAmiLpZ3clRb5xu6rM7O8AxNo=",
       "Microsoft.JSInterop.wasm": "sha256-YAuov+N9Jt7hvJRt9QsxNvhTGrzE64Y3sfAZ6hP1Z/A=",
       "Microsoft.JSInterop.WebAssembly.wasm": "sha256-sLSiCKh0RQEV/2cl05tr7wOLWzExQfPZovvpqYLJduQ=",
-      "SlotMachine.wasm": "sha256-QmiKFWBaSLZLg6UuOU3K89ei/qJVJ4p8uGJB37CnTmc=",
+      "SlotMachine.wasm": "sha256-+t2TYf+yH2cvo2QEkOr6+chAbCanMjTta73ICfiyde8=",
       "System.Collections.Concurrent.wasm": "sha256-NVEciweq4C45AijA3PT3fpwPDZ/4qnRVDko7sjqMGcc=",
       "System.Collections.wasm": "sha256-bvBd7UuVMdNGwvDjnnWS/xCyFuLiPMWMDQpHHEe55is=",
       "System.ComponentModel.wasm": "sha256-GPAg/lqvtlGqfal3j6EPgQ+6mqlusQ30qCeS8LYv8ws=",
@@ -42,7 +42,7 @@
       "System.Net.Http.Json.wasm": "sha256-3bW8kRcdjuU6qJ4KfJtKvffShSQtAgTeL7ouij6KeBQ=",
       "System.Net.Http.wasm": "sha256-n1cYCAyFoWZS8wr1yI5Z90q9bp9dU85yc8NA/5GdJ1o=",
       "System.Net.Primitives.wasm": "sha256-j3A7SN1Wpd95yFTPPq1YD+PxIDYicARL6W3t8sMPhFI=",
-      "System.Private.CoreLib.wasm": "sha256-I219v1+eR3NjnqXK/AK8LdPuwRNF+ODxm1zW0hWiVsU=",
+      "System.Private.CoreLib.wasm": "sha256-E6HqJhWiXciIeCLLU5NKvevalAuKN9LcMQLjnI6CAqg=",
       "System.Private.Uri.wasm": "sha256-CfQMrEX3TS1+yFeShuhMp1/ItLPwxGUBZH5QseqFQzo=",
       "System.Runtime.InteropServices.JavaScript.wasm": "sha256-rXNWJxdH8tME4a+ZYwP7wellel8Xp4lVPsbIQmC+ImE=",
       "System.Runtime.wasm": "sha256-KDmK53KPJtuJAv/hCrk++9Ms/Emuo9Ht9auV4gm/gZw=",

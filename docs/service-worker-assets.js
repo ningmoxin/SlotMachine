@@ -33,7 +33,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-Of6VNz0FNEIvJvxAX042Rc82WS9mKKxbhy9nbomJaMg=",
+      "hash": "sha256-ijscUMvmfQPYfN+ygBi9k3VzPeQ2Pg5dnVQDZ0BliAE=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -93,7 +93,7 @@
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-QmiKFWBaSLZLg6UuOU3K89ei\/qJVJ4p8uGJB37CnTmc=",
+      "hash": "sha256-+t2TYf+yH2cvo2QEkOr6+chAbCanMjTta73ICfiyde8=",
       "url": "_framework\/SlotMachine.wasm"
     },
     {
@@ -137,7 +137,7 @@
       "url": "_framework\/System.Net.Primitives.wasm"
     },
     {
-      "hash": "sha256-I219v1+eR3NjnqXK\/AK8LdPuwRNF+ODxm1zW0hWiVsU=",
+      "hash": "sha256-E6HqJhWiXciIeCLLU5NKvevalAuKN9LcMQLjnI6CAqg=",
       "url": "_framework\/System.Private.CoreLib.wasm"
     },
     {
@@ -169,7 +169,7 @@
       "url": "SlotMachine.styles.css"
     },
     {
-      "hash": "sha256-xM42CzeaqIxEkg\/VMR5qZbVOnzUEZh9ychPrikUO\/nI=",
+      "hash": "sha256-UP5i2DnwIBCLRnx1TIy5LwODnRQ0CRIygZeACkYoAnU=",
       "url": "css\/app.css"
     },
     {
@@ -181,11 +181,15 @@
       "url": "css\/bootstrap\/bootstrap.min.css.map"
     },
     {
+      "hash": "sha256-qArRKvHVcNl\/d6H\/jxtv3P73r92PliuFDcRFOF0PhrI=",
+      "url": "data\/dun-dun-duuuun.mp3"
+    },
+    {
       "hash": "sha256-D8ykH9t3vsnZ+BH0Q0UFPFSgIExWDVVlL2RVVzvTo+I=",
       "url": "data\/glass_ping.mp3"
     },
     {
-      "hash": "sha256-W6PJzDGgX3vPpmL7bpCWCl\/XCx4TYeLRVNNDt4nyMXM=",
+      "hash": "sha256-f1hFnnOoaP1ufCi7JV3hBSVY57ekRs6Lqf4SVFQ9mqs=",
       "url": "data\/slots.json"
     },
     {
@@ -201,17 +205,13 @@
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-SEZBr3U9aCV7I\/S3wbTx6PorSG5cCHY78WHvOmOMKRs=",
+      "hash": "sha256-\/4sg77s9nsTmV5G9dsOMcFbHU2xatNY+R3QgJIS3HJ0=",
       "url": "index.html"
     },
     {
       "hash": "sha256-7w46SEBDDHYkuD7ybkklVGOh3G50hUsv8AuyBYFkbSA=",
       "url": "manifest.webmanifest"
-    },
-    {
-      "hash": "sha256-enKgCMkYmCpfEcmg6Annbmc40VZ\/A6aYYSQjZfVn2cU=",
-      "url": "sample-data\/weather.json"
     }
   ],
-  "version": "kNG0bGcB"
+  "version": "zqWzMh0k"
 };
