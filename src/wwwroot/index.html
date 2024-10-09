@@ -73,7 +73,7 @@
                     // Check if reelOffset has gone beyond the reel's height
                     if (reelOffset >= reelHeight / 2) {
                         // Reset offset to create a seamless loop effect
-                        reelOffset = reelOffset % (reelHeight / 2);   
+                        reelOffset = reelOffset % (reelHeight / 2);
                         reel.style.transition = 'none'; // Remove transition effect for the reset
                     }
                     reel.style.transform = `translateY(-${reelOffset}px)`;
