@@ -33,7 +33,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-ijscUMvmfQPYfN+ygBi9k3VzPeQ2Pg5dnVQDZ0BliAE=",
+      "hash": "sha256-STRsmsRj2dENAX9rALt9otT88VW0fCOPsqyOqWUlU9s=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -93,7 +93,7 @@
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-+t2TYf+yH2cvo2QEkOr6+chAbCanMjTta73ICfiyde8=",
+      "hash": "sha256-owsGXc6eTglUjvX\/2WDQXp844xXWwUJi78Y3JK4i8X8=",
       "url": "_framework\/SlotMachine.wasm"
     },
     {
@@ -189,7 +189,7 @@
       "url": "data\/glass_ping.mp3"
     },
     {
-      "hash": "sha256-f1hFnnOoaP1ufCi7JV3hBSVY57ekRs6Lqf4SVFQ9mqs=",
+      "hash": "sha256-LNDwSNPiTYuMwaTUBU0aupVizyVfup8Qaa6XD0Xx8dk=",
       "url": "data\/slots.json"
     },
     {
@@ -213,5 +213,5 @@
       "url": "manifest.webmanifest"
     }
   ],
-  "version": "zqWzMh0k"
+  "version": "rJzNqz+t"
 };
