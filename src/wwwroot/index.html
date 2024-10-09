@@ -18,6 +18,8 @@
         let reelOffset = 0; // Track the current offset
         let lastSoundTime = 0;
 
+        const symbolHeight = 50; // Height of each symbol in pixels
+
         // 註冊 SlotFinal 事件監聽器
         window.registerSlotFinalEvent = function (dotNetObject) {
             document.addEventListener("SlotFinal", function () {
@@ -25,15 +27,27 @@
                 dotNetObject.invokeMethodAsync("OnSlotFinal");
             });
         };
+
         function getRandomSpeed(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
-        function startReelAnimation() {
+        function getExcludeOffset(symbols, excludeNames) {
+            let excludeOffset = [];
+            excludeNames.forEach(name => {
+                const index = symbols.findIndex(symbol => symbol.innerText.trim() === name);
+                if (index !== -1) {
+                    excludeOffset.push(index * symbolHeight);
+                }
+            });
+            return excludeOffset;
+        }
+
+        function startReelAnimation(excludeNames) {
             const reel = document.getElementById('reel');
+            const symbols = Array.from(reel.children);
             const spinSound = document.getElementById('spinSound');
             const dunSound = document.getElementById('dunSound');
-            const symbolHeight = 50; // Height of each symbol in pixels
             const totalSymbols = reel.children.length; // Total number of symbols (including duplicates)
             const reelHeight = symbolHeight * totalSymbols; // Total height of the reel content
 
@@ -59,7 +73,7 @@
                     // Check if reelOffset has gone beyond the reel's height
                     if (reelOffset >= reelHeight / 2) {
                         // Reset offset to create a seamless loop effect
-                        reelOffset = reelOffset % (reelHeight / 2);
+                        reelOffset = reelOffset % (reelHeight / 2);   
                         reel.style.transition = 'none'; // Remove transition effect for the reset
                     }
                     reel.style.transform = `translateY(-${reelOffset}px)`;
@@ -69,7 +83,8 @@
                         requestAnimationFrame(spin);
                     } else {
                         // Scroll to the nearest multiple of 50px at a fixed speed of 1
-                        const nearest50 = Math.ceil(reelOffset / symbolHeight) * symbolHeight;
+                        let nearest50 = Math.ceil(reelOffset / symbolHeight) * symbolHeight;
+                        nearest50 = dontPickMe(nearest50, excludeNames, symbols);
                         scrollToFinalPosition(nearest50);
                     }
                 } else {
@@ -102,6 +117,22 @@
                 sound.play();
                 lastSoundTime = now;
             }
+        }
+
+        function dontPickMe(finalOffset, excludeNames, symbols) {
+            let excludeOffset = getExcludeOffset(symbols, excludeNames);
+            let reelHeight = symbolHeight * (symbols.length-1);
+
+            if (excludeOffset.includes(finalOffset)) {
+                let newIndex;
+                do {
+                    //newIndex = Math.floor(Math.random() * symbols.length)
+                    finalOffset = finalOffset + (Math.floor(Math.random() * 3)+1)*50;
+                } while (excludeOffset.includes(finalOffset));
+                finalOffset = finalOffset > reelHeight ? finalOffset - reelHeight : finalOffset;
+                
+            }            
+            return finalOffset;
         }
 
         function scrollToFinalPosition(finalOffset) {

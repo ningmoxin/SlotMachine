@@ -18,6 +18,7 @@
         <p>Loading symbols...</p>
     }
 </div>
+
 <div class="slot-container">
     @if (symbols != null && symbols.Count > 0)
     {
@@ -43,6 +44,7 @@
 @code {
     // List to hold the symbols
     private List<string>? symbols { get; set; }
+    private List<string>? excludeNames { get; set; }
     private bool isSpinning = false;
     private bool isStopped = true;
     private string spinText = "Start";
@@ -62,6 +64,7 @@
     {
         // Load symbols from the JSON file
         symbols = await LoadSymbolsFromJsonAsync();
+        excludeNames = await LoadExcludeNameFromJsonAsync();
     }
 
     // Method to load symbols from the JSON file
@@ -81,6 +84,21 @@
         }
     }
 
+    private async Task<List<string>> LoadExcludeNameFromJsonAsync()
+    {
+        try
+        {
+            // Read JSON file from wwwroot
+            var response = await Http.GetFromJsonAsync<List<string>>(@"data\xxx.json");
+            return response ?? new List<string>();
+        }
+        catch (Exception ex)
+        {
+            // Handle any errors
+            Console.WriteLine($"Error loading exclude name: {ex.Message}");
+            return new List<string>();
+        }
+    }
 
     private async Task Spin()
     {
@@ -89,8 +107,14 @@
             isSpinning = true;
             isStopped = false;
             spinText = "Stop"; // 更改按鈕文本為 "Stop"
-                               // Start spinning the reel using JavaScript
-            await JS.InvokeVoidAsync("startReelAnimation");
+
+            if (excludeNames == null || !excludeNames.Any())
+            {
+                excludeNames = await LoadExcludeNameFromJsonAsync();
+            }
+
+            // Start spinning the reel using JavaScript
+            await JS.InvokeVoidAsync("startReelAnimation", excludeNames);
             Func<Task> workItem = async () =>
                         {
                             await Task.Delay(300); // 可以根據需求設置延遲時間
