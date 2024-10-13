@@ -4,6 +4,17 @@
 @inject IJSRuntime JS
 
 <h3>Single Reel Slot Machine</h3>
+<!-- 增加音效或人聲選擇的 RadioButton -->
+<div class="audio-options">
+    <label>
+        <input name="audio" type="radio" value="sound"/>
+        音效
+    </label>
+    <label>
+        <input name="audio" type="radio" value="voice" checked />
+        人聲
+    </label>
+</div>
 <!-- Slot 符號橫向清單 -->
 <div class="symbol-container">
     @if (symbols != null)
