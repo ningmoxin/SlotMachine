@@ -167,6 +167,7 @@
                 utterance.pitch = 0.8;
                 //讀音修正
                 utterance.text = utterance.text.replace("崴", "ㄨㄟ");
+                utterance.text = utterance.text.replace("妏", "ㄨㄣˊ");
                 // 開始朗讀
                 window.speechSynthesis.speak(utterance);
 
