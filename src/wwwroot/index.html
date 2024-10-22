@@ -11,6 +11,7 @@
     <div id="app">Loading...</div>
     <audio id="spinSound" src="data/glass_ping.mp3"></audio>
     <audio id="dunSound" src="data/dun-dun-duuuun.mp3"></audio>
+
     <script>
         let isSpinning = false;
         let isStopping = false;
@@ -18,12 +19,38 @@
         let reelOffset = 0; // Track the current offset
         let lastSoundTime = 0;
 
+        let voices = [];
+
+        // 初始化时获取可用的语音
+        function loadVoices() {
+            voices = window.speechSynthesis.getVoices();
+
+            const voiceSelect = document.getElementById('voiceSelect');
+            let thirdHumanVoiceIndex = 0
+            // 将所有可用的语音添加到选择框中
+            voices.forEach((voice, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.text = `${voice.name} (${voice.lang}) `;
+                voiceSelect.appendChild(option);
+                if (voice.name.toLowerCase().includes("zhiwei")) {
+                    thirdHumanVoiceIndex = index+1;
+                }
+            });
+            voiceSelect.selectedIndex = thirdHumanVoiceIndex
+        }
+
         // 註冊 SlotFinal 事件監聽器
         window.registerSlotFinalEvent = function (dotNetObject) {
             document.addEventListener("SlotFinal", function () {
                 // 當 SlotFinal 事件觸發時，調用 Blazor 的 OnSlotFinal 方法
                 dotNetObject.invokeMethodAsync("OnSlotFinal");
             });
+
+            // 如果声音列表还没有加载完成
+            window.speechSynthesis.onvoiceschanged = function () {
+                loadVoices();
+            };
         };
         function getRandomSpeed(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -138,7 +165,7 @@
         }
 
         function getRandomMessage() {
-            const messages = ["輪到你了", "麻煩您了", "謝謝您", "就是你了", "換你了", "踹共啦","一定行帝"];
+            const messages = ["輪到你了", "麻煩您了", "謝謝您", "就是你了", "換你了", "踹共啦", "一定行帝"];
 
             // 隨機選擇一個元素
             const randomIndex = Math.floor(Math.random() * messages.length);
@@ -148,23 +175,27 @@
         function playSelectedSound() {
             // 檢查瀏覽器是否支援 Web Speech API
             if ('speechSynthesis' in window && getSelectedOption() == "voice") {
-                
+
                 // 創建一個新的 SpeechSynthesisUtterance 物件
 
                 const textToSpeak = getVisibleSymbol() + getRandomMessage();
                 const utterance = new SpeechSynthesisUtterance(textToSpeak);
 
+                const selectedVoiceIndex = document.getElementById('voiceSelect').value;
+                if (selectedVoiceIndex !== "") {
+                    utterance.voice = voices[selectedVoiceIndex];
+                } 
                 // 設定語言，這裡設為中文
                 utterance.lang = 'zh-TW'; // zh-TW 代表繁體中文，zh-CN 代表簡體中文
 
                 // 設定語速，1 是正常速度，0.5 是慢速，2 是快速
-                utterance.rate = 0.3;
+                utterance.rate = 0.5;
 
                 // 設定音量（0 到 1）
                 utterance.volume = 1;
 
                 // 設定音調（0 到 2）
-                utterance.pitch = 0.8;
+                //utterance.pitch = 0;
                 //讀音修正
                 utterance.text = utterance.text.replace("崴", "威");
                 utterance.text = utterance.text.replace("妏", "文");
