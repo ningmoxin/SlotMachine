@@ -1,0 +1,33 @@
+# .github/workflows/deploy.yml
+name: Build to docs folder on main branch
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Publish Blazor to docs/
+        run: dotnet publish -c Release -o docs
+
+      - name: Add .nojekyll to prevent GitHub from processing it as Jekyll
+        run: touch docs/.nojekyll
+
+      - name: Commit and push updated docs to main
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add docs
+          git commit -m "Update docs folder" || echo "No changes to commit"
+          git push
