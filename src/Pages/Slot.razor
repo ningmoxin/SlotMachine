@@ -54,6 +54,19 @@
             <span>@spinText</span>
         </button>
     </div>
+
+    @if (resultHistory.Count > 0)
+    {
+        <div class="history-container">
+            <h4>歷史結果：</h4>
+            <ul>
+                @foreach (var result in resultHistory)
+                {
+                    <li>@result</li>
+                }
+            </ul>
+        </div>
+    }
 </div>
 
 
@@ -66,6 +79,8 @@
     private string spinText = "Start";
     // JS引用，用於監聽 SlotFinal 事件
     private DotNetObjectReference<Slot> objRef;
+    private List<string> resultHistory = new(); // 儲存歷史結果
+    private string? currentResult;
 
     // 初始化方法
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -129,10 +144,11 @@
 
     // Blazor 中的回調方法，用於監聽 JS 事件 SlotFinal
     [JSInvokable]
-    public void OnSlotFinal()
+    public void OnSlotFinal(string symbol)
     {
         // 當 SlotFinal 事件觸發時，啟用按鈕
         isSpinning = false;
+        resultHistory.Insert(0, symbol); // 新結果放前面
         StateHasChanged(); // 更新 UI 狀態
         Console.WriteLine("Slot Machine Final Event Triggered.");
     }
