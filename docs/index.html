@@ -42,11 +42,7 @@
 
         // 註冊 SlotFinal 事件監聽器
         window.registerSlotFinalEvent = function (dotNetObject) {
-            document.addEventListener("SlotFinal", function () {
-                // 當 SlotFinal 事件觸發時，調用 Blazor 的 OnSlotFinal 方法
-                dotNetObject.invokeMethodAsync("OnSlotFinal");
-            });
-
+            window.dotNetObjectRef = dotNetObject
             // 如果声音列表还没有加载完成
             window.speechSynthesis.onvoiceschanged = function () {
                 loadVoices();
@@ -99,6 +95,8 @@
                         const nearest50 = Math.ceil(reelOffset / symbolHeight) * symbolHeight;
                         scrollToFinalPosition(nearest50);
                     }
+
+
                 } else {
                     // Normal spinning
                     reelOffset += speed; // Keep spinning at the initial speed
@@ -151,9 +149,10 @@
                     reel.style.transform = `translateY(-${finalOffset}px)`;
                     isSpinning = false;
                     isStopping = false;
-                    document.dispatchEvent(new Event("SlotFinal"));
+                    dotNetObjectRef.invokeMethodAsync("OnSlotFinal", getVisibleSymbol());
                     playSelectedSound();
                 }
+
             }
 
             scroll();
@@ -178,7 +177,7 @@
 
                 // 創建一個新的 SpeechSynthesisUtterance 物件
 
-                const textToSpeak = getVisibleSymbol() + getRandomMessage();
+                const textToSpeak = getVisibleSymbol().split(" ")[1].toString() + getRandomMessage();
                 const utterance = new SpeechSynthesisUtterance(textToSpeak);
 
                 const selectedVoiceIndex = document.getElementById('voiceSelect').value;
@@ -243,7 +242,7 @@
             const index = Math.round(Math.abs(translateY) / symbolHeight) % symbols.length;
 
             // 返回當前可見的符號
-            return symbols[index].innerText.split(" ")[1].toString();
+            return symbols[index].innerText;
         }
 
         function getSelectedOption() {

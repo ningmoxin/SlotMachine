@@ -33,7 +33,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-kfITnwm5xGVyzXrHEPBeTKBCM7aLIZr6qrtrWfoPRcI=",
+      "hash": "sha256-9ELvbWwrSpcWwg0x9dWNiu2TltFhM82zVC7QkhPCQAw=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -93,7 +93,7 @@
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-GO79pYeMhztJIAURHnBnFeDtFvfxtwYWsIfWXjaRLgY=",
+      "hash": "sha256-J7W5Nhx7pd3gzkV14k06VBYhIsfNUjxKnhTI4OFnHtY=",
       "url": "_framework\/SlotMachine.wasm"
     },
     {
@@ -169,7 +169,7 @@
       "url": "SlotMachine.styles.css"
     },
     {
-      "hash": "sha256-UP5i2DnwIBCLRnx1TIy5LwODnRQ0CRIygZeACkYoAnU=",
+      "hash": "sha256-lnt56fI8rMTvIvN+xYuNXtrx4OAQa5ZGucDvBxFL7hY=",
       "url": "css\/app.css"
     },
     {
@@ -189,7 +189,7 @@
       "url": "data\/glass_ping.mp3"
     },
     {
-      "hash": "sha256-WHQlfBA8\/AZuJKM0rDofgw5C1Badwy7OsqJWvS0Zu7o=",
+      "hash": "sha256-e5CSESTkQog72wBWfKV4hfvduU7u+ms9bzaBdDN4MNA=",
       "url": "data\/slots.json"
     },
     {
@@ -205,7 +205,7 @@
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-6GA6ogOJyvS+i+DI2NYMj61+TuxyK1Hcu99f8bSoVnQ=",
+      "hash": "sha256-t953edsTQbm1pJBkuyB55eRgLoHvU+nUIHc3rErOdxg=",
       "url": "index.html"
     },
     {
@@ -213,5 +213,5 @@
       "url": "manifest.webmanifest"
     }
   ],
-  "version": "xaccXB1w"
+  "version": "hlAmbN69"
 };
