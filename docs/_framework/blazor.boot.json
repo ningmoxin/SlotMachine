@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "SlotMachine",
   "resources": {
-    "hash": "sha256-w4R9RwCcNbcPTIe8N78BKol/T1vqhhluVqtTe55BzyM=",
+    "hash": "sha256-ETdo5fL4ird+cLo/YOHks0wNETgWM5BT0v15a8wiBnU=",
     "jsModuleNative": {
       "dotnet.native.8.0.19.juh0hh4878.js": "sha256-O/NCYcAN9uPocD7ns7AzF/cqx7f5vL1PTJCQs0vEXyk="
     },
@@ -31,7 +31,7 @@
       "Microsoft.Extensions.Primitives.wasm": "sha256-6187ynEahDlSLMBvD4vAmiLpZ3clRb5xu6rM7O8AxNo=",
       "Microsoft.JSInterop.wasm": "sha256-YAuov+N9Jt7hvJRt9QsxNvhTGrzE64Y3sfAZ6hP1Z/A=",
       "Microsoft.JSInterop.WebAssembly.wasm": "sha256-sLSiCKh0RQEV/2cl05tr7wOLWzExQfPZovvpqYLJduQ=",
-      "SlotMachine.wasm": "sha256-J7W5Nhx7pd3gzkV14k06VBYhIsfNUjxKnhTI4OFnHtY=",
+      "SlotMachine.wasm": "sha256-SsxIcwjtnGlYuDRlBFRvNtNsiQgZowk3msnb1YbLW4Q=",
       "System.Collections.Concurrent.wasm": "sha256-8SdbNm0dHynN6lguowczzUoz94V6znTRltGwd+IX0rk=",
       "System.Collections.wasm": "sha256-ddpJV8b6hPjdqcTmEqOt5ay3Tkyy7xOK/T0j8J8SHN4=",
       "System.ComponentModel.wasm": "sha256-4gSYPm96L8CT5pKE25MQFQR0tJyEQi2zi4BO8+YEzwk=",

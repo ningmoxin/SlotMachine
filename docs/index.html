@@ -44,9 +44,9 @@
         window.registerSlotFinalEvent = function (dotNetObject) {
             window.dotNetObjectRef = dotNetObject
             // 如果声音列表还没有加载完成
-            window.speechSynthesis.onvoiceschanged = function () {
-                loadVoices();
-            };
+        };
+        window.speechSynthesis.onvoiceschanged = function () {
+            loadVoices();
         };
         function getRandomSpeed(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
