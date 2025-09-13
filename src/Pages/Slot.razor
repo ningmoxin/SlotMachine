@@ -89,6 +89,7 @@
         {
             objRef = DotNetObjectReference.Create(this);
             await JS.InvokeVoidAsync("registerSlotFinalEvent", objRef); // 註冊 JS 事件監聽
+            await JS.InvokeVoidAsync("initializeVoiceLoading");
         }
     }
     protected override async Task OnInitializedAsync()
