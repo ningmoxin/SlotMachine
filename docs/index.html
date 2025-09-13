@@ -23,31 +23,55 @@
 
         // 初始化时获取可用的语音
         function loadVoices() {
+            const voiceSelect = document.getElementById('voiceSelect');
+            if (!voiceSelect) {
+                console.error("voiceSelect 元素未找到！");
+                return;
+            }
+            let thirdHumanVoiceIndex = 0;
+
+            // 確保語音列表已加載完成
             voices = window.speechSynthesis.getVoices();
 
-            const voiceSelect = document.getElementById('voiceSelect');
-            let thirdHumanVoiceIndex = 0
-            // 将所有可用的语音添加到选择框中
+            // 如果語音列表仍然為空，則等待 onvoiceschanged 事件觸發
+            if (voices.length === 0) {
+                console.warn("語音列表尚未加載，等待 onvoiceschanged 事件...");
+                return;
+            }
+
+            // 清空選擇框，避免重複添加
+            voiceSelect.innerHTML = '';
+
+            // 將所有可用的語音添加到選擇框中
             voices.forEach((voice, index) => {
                 const option = document.createElement('option');
                 option.value = index;
                 option.text = `${voice.name} (${voice.lang}) `;
                 voiceSelect.appendChild(option);
+
+                // 如果語音名稱包含 "zhiwei"，記錄其索引
                 if (voice.name.toLowerCase().includes("zhiwei")) {
-                    thirdHumanVoiceIndex = index+1;
+                    thirdHumanVoiceIndex = index;
                 }
             });
-            voiceSelect.selectedIndex = thirdHumanVoiceIndex
+
+            // 預設選擇第三個人聲（如果存在）
+            voiceSelect.selectedIndex = thirdHumanVoiceIndex;
         }
+
 
         // 註冊 SlotFinal 事件監聽器
         window.registerSlotFinalEvent = function (dotNetObject) {
             window.dotNetObjectRef = dotNetObject
             // 如果声音列表还没有加载完成
         };
-        window.speechSynthesis.onvoiceschanged = function () {
-            loadVoices();
+        window.initializeVoiceLoading = function () {
+            window.speechSynthesis.onvoiceschanged = function () {
+                loadVoices();
+            };
+            loadVoices(); // 初次加載語音
         };
+
         function getRandomSpeed(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
@@ -62,7 +86,7 @@
 
             isSpinning = true;
             isStopping = false;
-            speed = getRandomSpeed(20, 30); // Reset speed for spinning
+            speed = getRandomSpeed(10, 20); // Reset speed for spinning
             reelOffset = 0; // Reset offset
 
             // Reset the reel to the top position before starting
@@ -100,14 +124,24 @@
                 } else {
                     // Normal spinning
                     reelOffset += speed; // Keep spinning at the initial speed
+
                     // Check if reelOffset has gone beyond the reel's height
-                    if (reelOffset >= reelHeight / 2) {
+                    if (reelOffset >= reelHeight) {
                         // Reset offset to create a seamless loop effect
-                        reelOffset = reelOffset % (reelHeight / 2);
+                        reelOffset -= reelHeight; // Instead of using modulo, subtract the full height
                         reel.style.transition = 'none'; // Remove transition effect for the reset
+                    } else {
+                        // Apply smooth transition for normal spinning
+                        reel.style.transition = 'transform 0.1s linear';
                     }
+
+                    // Update the reel's transform property
                     reel.style.transform = `translateY(-${reelOffset}px)`;
+
+                    // Continue the animation
                     requestAnimationFrame(spin);
+
+
                 }
             }
 
