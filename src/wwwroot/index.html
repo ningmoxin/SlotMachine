@@ -73,7 +73,15 @@
         };
 
         function getRandomSpeed(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
+            const rtnValue = getRandomValue(min, max);
+            return rtnValue;
+
+        function getRandomValue(min, max) {
+            const array = new Uint32Array(1);
+            const randomNum = crypto.getRandomValues(array)[0];
+            const scaledRandomNum = randomNum / (0xFFFFFFFF + 1);
+
+            return Math.floor(scaledRandomNum * (max - min + 1)) + min;
         }
 
         function startReelAnimation() {
@@ -147,6 +155,7 @@
 
             spin();
         }
+
         function playSpinSound(sound, speed) {
             // 根据速度动态调整音效播放间隔
             const minInterval = 50; // 音效播放的最小间隔
@@ -201,7 +210,7 @@
             const messages = ["就是你了", "恭喜您", "好運降臨", "踹共啦", "命運選中了你", "中獎啦"];
 
             // 隨機選擇一個元素
-            const randomIndex = Math.floor(Math.random() * messages.length);
+            const randomIndex = getRandomValue(0, messages.length - 1);
             return messages[randomIndex];
         }
 
