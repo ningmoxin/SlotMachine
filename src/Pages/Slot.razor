@@ -51,6 +51,14 @@
     }
     <div style="margin:10px">
         <button class="btn" @onclick="Spin" disabled="@isSpinning">
+            @if (@spinText == "Start")
+            {
+                <i class="fa-solid fa-play"></i>
+            }
+            else
+            {
+                
+            }
             <span>@spinText</span>
         </button>
     </div>
@@ -58,13 +66,13 @@
     @if (resultHistory.Count > 0)
     {
         <div class="history-container">
-            <h4>歷史結果：</h4>
-            <ul>
+            <h3>歷史結果：</h3>
+            <ol>
                 @foreach (var result in resultHistory)
                 {
-                    <li>@result</li>
+                    <li><h3>@result</h3></li>
                 }
-            </ul>
+            </ol>
         </div>
     }
 </div>
@@ -149,7 +157,7 @@
     {
         // 當 SlotFinal 事件觸發時，啟用按鈕
         isSpinning = false;
-        resultHistory.Insert(0, symbol); // 新結果放前面
+        resultHistory.Add(symbol); // 新結果放前面
         StateHasChanged(); // 更新 UI 狀態
         Console.WriteLine("Slot Machine Final Event Triggered.");
     }
